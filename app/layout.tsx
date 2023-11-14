@@ -2,20 +2,25 @@
 import "@/styles/globals.css";
 import { Inter as FontSans } from "next/font/google";
 import Head from "next/head";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/providers/theme_provider";
+import SessionProvider from "@/components/providers/session_provider";
+import { getServerSession } from "next-auth";
+import { Toaster } from "@/components/ui/toaster";
 
 import { cn } from "../@/lib/utils";
+import Navbar from "./(components)/navbar";
 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession();
   return (
     <html>
       <body
@@ -40,9 +45,13 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <SessionProvider session={session}>
+              <Navbar />
+              {children}
+            </SessionProvider>
           </ThemeProvider>
         </main>
+        <Toaster />
       </body>
     </html>
   );
