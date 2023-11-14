@@ -24,7 +24,10 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Spline scene="https://prod.spline.design/BDhMpA6SFsxH0SOi/scene.splinecode" />
+      <Spline
+        className="hidden lg:flex"
+        scene="https://prod.spline.design/BDhMpA6SFsxH0SOi/scene.splinecode"
+      />
     </div>
   );
 }
